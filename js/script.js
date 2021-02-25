@@ -274,4 +274,120 @@ window.addEventListener('DOMContentLoaded', () => {
     }, 4000);
   }
 
+  //Simple Slider
+
+  // const slides = document.querySelectorAll('.offer__slide'),
+  //       sliderPrev = document.querySelector('.offer__slider-prev'),
+  //       sliderNext = document.querySelector('.offer__slider-next'),
+  //       total = document.querySelector('#total'),
+  //       current = document.querySelector('#current');
+
+  // let sliderIndex = 0;
+
+  // const addZero = (num) => {
+  //   return num < 10 ? '0' + num : num;
+  // };
+
+  // const showSlide = () => {
+
+  //   if (sliderIndex < 0) {
+  //     sliderIndex = slides.length - 1;
+  //   } else if (sliderIndex > slides.length - 1) {
+  //     sliderIndex = 0;
+  //   }
+
+  //   current.textContent = addZero(sliderIndex + 1);
+  //   total.textContent = addZero(slides.length);
+
+  //   slides.forEach((slide, i) => {
+  //     if (i == sliderIndex) {
+  //       slide.classList.add('show');
+  //       slide.classList.remove('hide');
+  //     } else {
+  //       slide.classList.add('hide');
+  //       slide.classList.remove('show');
+  //     }
+  //   })
+  // };
+
+  // showSlide();
+
+  // sliderPrev.addEventListener('click', () => {
+  //   sliderIndex--;
+  //   showSlide();
+  // });
+
+  // sliderNext.addEventListener('click', () => {
+  //   sliderIndex++;
+  //   showSlide();
+  // });
+
+  //Carousel slider
+
+  const slides = document.querySelectorAll('.offer__slide'),
+        sliderPrev = document.querySelector('.offer__slider-prev'),
+        sliderNext = document.querySelector('.offer__slider-next'),
+        total = document.querySelector('#total'),
+        current = document.querySelector('#current'),
+        sliderWrapper = document.querySelector('.offer__slider-wrapper'),
+        sliderField = document.querySelector('.offer__slider-inner'),
+        width = window.getComputedStyle(sliderWrapper).width;
+
+  let slideIndex = 0;
+  let offset = 0;
+
+  const addZero = (num) => {
+    return num < 10 ? '0' + num : num;
+  };
+
+  const updateSliderCounter = () => {
+    current.textContent = addZero(slideIndex + 1);
+    total.textContent = addZero(slides.length);
+  };
+
+  updateSliderCounter();
+
+  sliderField.style.width = 100 * slides.length + '%';
+  sliderField.style.display = 'flex';
+  sliderField.style.transition = '0.5s all';
+  sliderWrapper.style.overflow = 'hidden';
+
+  slides.forEach(slide => {
+    slide.style.width = width;
+  });
+
+  sliderNext.addEventListener('click', () => {
+    if (offset == +width.slice(0, width.length - 2) * (slides.length - 1)) {
+      offset = 0;
+    } else {
+      offset += +width.slice(0, width.length - 2);
+    }
+
+    sliderField.style.transform = `translateX(-${offset}px)`;
+
+    if (slideIndex >= slides.length - 1) {
+      slideIndex = 0;
+    } else {
+      slideIndex++;
+    }
+    updateSliderCounter();
+  });
+
+  sliderPrev.addEventListener('click', () => {
+    if (offset == 0) {
+      offset = +width.slice(0, width.length - 2) * (slides.length - 1);
+    } else {
+      offset -= +width.slice(0, width.length - 2);
+    }
+
+    sliderField.style.transform = `translateX(-${offset}px)`;
+
+    if (slideIndex <= 0) {
+      slideIndex = slides.length - 1;
+    } else {
+      slideIndex--;
+    }
+    updateSliderCounter();
+  });
+
 });
