@@ -11,12 +11,12 @@ window.addEventListener('DOMContentLoaded', () => {
 
   const modalTimerId = setTimeout(() => showModal('.modal', modalTimerId), 30000);
 
-  tabs();
+  tabs('.tabheader__item', '.tabcontent', '.tabheader__items', 'tabheader__item_active');
   modal('[data-modal]', '.modal', modalTimerId);
-  timer();
+  timer('.timer', '2021-04-11');
   cards();
   calc();
-  forms(modalTimerId);
+  forms('form', modalTimerId);
   slider();
 
 });
