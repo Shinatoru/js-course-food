@@ -1,4 +1,6 @@
-function forms() {
+import {closeModal, showModal} from './modal';
+
+function forms(modalTimerId) {
   const forms = document.querySelectorAll('form');
   const message = {
     loading: 'img/form/spinner.svg',
@@ -56,7 +58,7 @@ function forms() {
     const pervModalDialog = document.querySelector('.modal__dialog');
 
     pervModalDialog.style.display = 'none';
-    showModal();
+    showModal('.modal', modalTimerId);
 
     const thanksModal = document.createElement('div');
     thanksModal.classList.add('modal__dialog');
@@ -71,9 +73,9 @@ function forms() {
     setTimeout(() => {
       thanksModal.remove();
       pervModalDialog.style.display = 'block';
-      closeModal();
+      closeModal('.modal');
     }, 4000);
   }
 }
 
-module.exports = forms;
+export default forms;
